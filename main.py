@@ -50,7 +50,7 @@ if __name__ == "__main__":
     # import pdb; pdb.set_trace()
 
     # Load video
-    clip = VideoFileClip(args.inputfile).subclip(39, 41)
+    clip = VideoFileClip(args.inputfile)#.subclip(39, 41)
     # Detect vehicles from video
     out_clip = clip.fl_image(detector.detect)
     # Save annotated frames to output video file
