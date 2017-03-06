@@ -1,0 +1,6 @@
+__MACOSX/
+*.zip
+.DS_Store
+data/**
+__pycache__/
+test*.mdl
