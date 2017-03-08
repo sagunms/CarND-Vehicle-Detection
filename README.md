@@ -194,7 +194,7 @@ The working implementation can be summarised with the following animation.
 
 My pipeline should perform reasonably well on the entire project video. 
 
-Here's a link to [test video result](./annotated_project_video_test.mp4) and [final project video result](./annotated_project_video_test.mp4).
+Here's a link to [test video result](./annotated_project_video_test.mp4) and [final project video result](./annotated_project_video.mp4).
 
 ---
 
