@@ -3,7 +3,7 @@ import numpy as np
 
 from vehicle_lib.feature_extract import single_img_features
 
-def draw_sliding_windows(image, windows, color=(0, 0, 255), thick=3):
+def draw_sliding_windows(image, windows, color=(255, 165, 0), thick=3):
     for window in windows:
         cv2.rectangle(image, window[0], window[1], color, thick)
     return image

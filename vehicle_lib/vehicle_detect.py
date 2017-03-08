@@ -45,16 +45,16 @@ class VehicleDetect:
                                              y_start_stop=self.y_start_stop,
                                              xy_window=self.xy_window, xy_overlap=self.xy_overlap)
 
-        on_windows = window.search_windows(img, slided_windows, self.classifier, #self.scaler,
+        on_windows = window.search_windows(img, slided_windows, self.classifier, 
                                            color_space=self.color_space, spatial_size=self.spatial_size,
                                            hist_bins=self.hist_bins, orient=self.orient,
                                            pix_per_cell=self.pix_per_cell, cell_per_block=self.cell_per_block,
                                            hog_channel=self.hog_channel, spatial_feat=self.spatial_feat,
                                            hist_feat=self.hist_feat, hog_feat=self.hog_feat)
 
-        heatmap = self.stable_heatmaps.generate(img, on_windows)
+        heat_map = self.stable_heatmaps.generate(img, on_windows)
 
-        labels = label(heatmap)
+        labels = label(heat_map)
 
         image_with_bb = window.draw_labeled_bboxes(input_image, labels)
 

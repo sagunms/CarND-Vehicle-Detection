@@ -19,20 +19,20 @@ class StableHeatMaps:
             self.frames.pop()
         return np.sum(np.array(self.frames), axis=0)
 
-    def _add_heat(self, heatmap, bbox_list):
+    def _add_heat(self, heat_map, bbox_list):
         # Iterate through list of bboxes
         for box in bbox_list:
             # Add += 1 for all pixels inside each bbox
             # Assuming each "box" takes the form ((x1, y1), (x2, y2))
-            heatmap[box[0][1]:box[1][1], box[0][0]:box[1][0]] += 1
-        # Return updated heatmap
-        return heatmap
+            heat_map[box[0][1]:box[1][1], box[0][0]:box[1][0]] += 1
+        # Return updated heat_map
+        return heat_map
 
-    def _apply_threshold(self, heatmap, threshold):
+    def _apply_threshold(self, heat_map, threshold):
         # Zero out pixels below the threshold
-        heatmap[heatmap <= threshold] = 0
+        heat_map[heat_map <= threshold] = 0
         # Return thresholded map
-        return heatmap
+        return heat_map
 
     # Get aggregate heatmap over history of num_frames
     def generate(self, img, on_windows):

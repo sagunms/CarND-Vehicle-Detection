@@ -31,21 +31,21 @@ if __name__ == "__main__":
     print('Model loaded: {}'.format(args.model))
 
     detector = vehicle_detect.VehicleDetect(color_space = params['color_space'],
-											orient = params['orient'],
-											pix_per_cell = params['pix_per_cell'],
-											cell_per_block = params['cell_per_block'],
-											hog_channel = params['hog_channel'],
-											spatial_size = params['spatial_size'],
-											hist_bins = params['hist_bins'],
-											spatial_feat = params['spatial_feat'],
-											hist_feat = params['hist_feat'],
-											hog_feat = params['hog_feat'],
-											y_start_stop = params['y_start_stop'],
-											x_start_stop = params['x_start_stop'],
-											xy_window = params['xy_window'],
-											xy_overlap = params['xy_overlap'],
-											heatmap_threshold = params['heat_threshold'],
-											classifier=pipeline)
+                                            orient = params['orient'],
+                                            pix_per_cell = params['pix_per_cell'],
+                                            cell_per_block = params['cell_per_block'],
+                                            hog_channel = params['hog_channel'],
+                                            spatial_size = params['spatial_size'],
+                                            hist_bins = params['hist_bins'],
+                                            spatial_feat = params['spatial_feat'],
+                                            hist_feat = params['hist_feat'],
+                                            hog_feat = params['hog_feat'],
+                                            y_start_stop = params['y_start_stop'],
+                                            x_start_stop = params['x_start_stop'],
+                                            xy_window = params['xy_window'],
+                                            xy_overlap = params['xy_overlap'],
+                                            heatmap_threshold = params['heat_threshold'],
+                                            classifier=pipeline)
 
     # import pdb; pdb.set_trace()
 

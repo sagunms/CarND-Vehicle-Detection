@@ -14,3 +14,5 @@ def plt_imshow(img, title=''):
 
 def cv2_destroy():
     cv2.destroyAllWindows()
+
+# import pdb;pdb.set_trace()
