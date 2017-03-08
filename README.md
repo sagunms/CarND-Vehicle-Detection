@@ -38,19 +38,19 @@ The project is written in python and utilises numpy, OpenCV, scikit learn and Mo
 
 Here are the steps required to generate the model from scratch and run the project for vehicle tracking. 
 
-** Clone my project **
+#### Clone my project
 ```bash
 git clone https://github.com/sagunms/CarND-Vehicle-Detection.git
 cd CarND-Vehicle-Detection
 ```
 
-** Activate conda environment **
+#### Activate conda environment
 Follow instructions from [CarND-Term1-Starter-Kit page](https://github.com/udacity/CarND-Term1-Starter-Kit) to setup the conda environment from scratch.
 ```bash
 source activate carnd-term1
 ```
 
-** Download training data of vehicles and non-vehicles **
+#### Download training data of vehicles and non-vehicles
 ```bash
 mkdir data
 cd data
@@ -61,17 +61,17 @@ unzip non-vehicles.zip
 cd ..
 ```
 
-** Configure parameters **
+#### Configure parameters
 ```bash
 vim vehicle_lib/config.py
 ```
 
-** Train model from downloaded training data **
+#### Train model from downloaded training data
 ```bash
 python model.py -m model.mdl
 ```
 
-** Run vehicle detection project (output video) **
+#### Run vehicle detection project (output video)
 ```bash
 python main.py -m model.mdl -i project_video.mp4 -o annotated_project_video.mp4
 ```
