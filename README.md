@@ -184,7 +184,9 @@ The bounding boxes then overlaid on the area of the blobs detected.
 
 ![alt text][output_bboxes]
 
-This worked great for images but when testing with video frames, the bounding boxes fluctuated at different patches in the image. In order to achieve stable tracking of vehicles that were already detected in temporal dimension, I created a `StableHeatMaps` class in `vehicle_lib/heatmap.py` which maintains a historical sum of heat pixels (of same size as the input frame) over 20 frames. The class includes private methods `_add_heat()` which adds heat for all pixels that fall within the patch of positive detection by the classifier, and `_apply_threshold()` to remove noise. The method `generate()` generates an aggregate sum of heatmap over history of 20 frames which thereby helps to stabalise the predicted bounding boxes. 
+This worked great for images but when testing with video frames, the bounding boxes fluctuated at different patches in the image. In order to achieve stable tracking of vehicles that were already detected in temporal dimension, I created a `StableHeatMaps` class in `vehicle_lib/heatmap.py` which maintains a historical sum of heat pixels (of same size as the input frame) over 20 frames. The class includes private methods `_add_heat()` which adds heat for all pixels that fall within the patch of positive detection by the classifier, and `_apply_threshold()` to remove false-positives by thresholding. 
+
+The method `generate()` generates an aggregate sum of heatmap over history of 20 frames which thereby helps to stabalise the predicted bounding boxes. I am able to eliminate all false positives as shown in the project video, showing the method works fine.
 
 ## Video Implementation
 
@@ -198,16 +200,14 @@ Here's a link to [test video result](./annotated_project_video_test.mp4) and [fi
 
 ---
 
-## Discussion
+## Discussion, Limitations and Improvements
 
 This project was really exciting to work on but it's a shame I had very little time to work on it. The implementation is far from perfect, but vehicle detection works quite well for the given project video. However, several things could be improved.
 
-My algorithm pipeline would probably fail for objects different from vehicles it was trained with such as motorbikes, cyclists and pedestrians. Perhaps if the training images from the same camera is used, the classifier accuracy would be better. 
-
-Although summing heat map over several historical frames seems to stabilise tracking of vehicles, a more robust approach would probably be the application of Kalman Filters for vehicle tracking. 
-
-One of the drawbacks is that my detection pipeline is very slow (~4.5s per frame) and therefore cannot be used for real-time applications. Recent deep learning techniques like YOLO seem better suited in terms of detection accuracy and performance and therefore would probably be worth evaluating as an alternative to traditional computer vision and machine learning techniques such as used in this project. 
-
-A simple method of improving processing speed would be to drop frames or scan frames at high frequency over high confidence heatmaps and lower at other reason. Kalman filter again, would be better in tracking with lower computation. 
-
-Had there been sufficient time, I would integrate Advanced Lane Lines detection into this project. It would also be interesting to integrate an additional pipeline for using Traffic line classification to detect road signs. 
+1. One of the main drawbacks is that my detection pipeline is very slow (~4.5s per frame) and therefore cannot be used for real-time applications. Recent deep learning and CNN techniques like YOLO seem better suited in terms of detection accuracy and real-time performance. Therefore it would be worth evaluating these modern methods as an alternative to traditional computer vision and machine learning techniques such as used in this project.
+2. My algorithm pipeline would probably fail in real-world scenarios. For example, it would fail for objects different from vehicles/non-vehicles it was trained with such as motorbikes, cyclists and pedestrians. Perhaps if the training images from the same camera is used, the classifier accuracy would be better.
+3. Similar to advanced line detection limitations, there can be some false positives produced in cases such as shadow regions.
+4. This was tested for only one video and therefore, it there can be some false positives produced in cases such as shadow regions. 
+5. My implementation sums heat map over several historical frames and then thresholding eliminate false-positives and stabilise tracking of vehicles quite well. However, I would be inclined to explore a more robust approaches such as Kalman Filters for vehicle tracking. 
+6. A simple method of improving processing speed would be to drop frames or scan frames at high frequency over high confidence heatmaps and lower at other reason. Kalman filter again, would be better in tracking with lower computation.
+7. Had there been sufficient time, I would integrate Advanced Lane Lines detection into this project. It would also be interesting to integrate an additional pipeline for using Traffic line classification to detect road signs. 
