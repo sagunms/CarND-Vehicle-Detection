@@ -13,5 +13,13 @@ config = {
     'y_start_stop'      : [400, 600],
     'xy_window'         : (96, 85),
     'xy_overlap'        : (0.75, 0.75),
-    'heat_threshold'    : 15
+    'heat_threshold'    : 15,
+    'colour_filter_y'   : (90, 255),        # Lane finding
+    'colour_filter_v'   : (10, 110),
+    'sobel_grad_xy'     : 'x',
+    'sobel_grad_xy_th'  : (5, 230),
+    'sobel_grad_mag'    : 3,
+    'sobel_grad_mag_th' : (20, 150),
+    'sobel_grad_dir'    : 3,
+    'sobel_grad_dir_th' : (0.5, 1.0)
 };

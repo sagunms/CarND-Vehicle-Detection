@@ -34,9 +34,9 @@ class VehicleDetect:
         self.heatmap_threshold = heatmap_threshold
         self.classifier = classifier
 
-        self.stable_heatmaps = heatmap.StableHeatMaps(threshold=heatmap_threshold, num_frames=20)
+        self.stable_heatmaps = heatmap.StableHeatMaps(threshold=heatmap_threshold, num_frames=25)
 
-    def detect(self, input_image):
+    def detect(self, input_image, frame_overlay=True):
 
         # Normalised copy of input image
         img = np.copy(input_image).astype(np.float32) / 255.
@@ -56,6 +56,9 @@ class VehicleDetect:
 
         labels = label(heat_map)
 
-        image_with_bb = window.draw_labeled_bboxes(input_image, labels)
+        if frame_overlay is False:
+            input_image = np.zeros_like(input_image)
+            
+        image_with_bb = window.draw_labeled_bboxes(input_image, labels)   
 
         return image_with_bb
