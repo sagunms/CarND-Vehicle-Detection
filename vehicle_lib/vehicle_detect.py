@@ -14,7 +14,7 @@ class VehicleDetect:
     def __init__(self, color_space, orient, pix_per_cell, cell_per_block,
                  hog_channel, spatial_size, hist_bins, spatial_feat,
                  hist_feat, hog_feat, y_start_stop, x_start_stop, xy_window,
-                 xy_overlap, heatmap_threshold, #scaler,
+                 xy_overlap, heatmap_threshold, heatmap_buffer_size,
                  classifier):
 
         self.color_space = color_space          # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
@@ -32,9 +32,11 @@ class VehicleDetect:
         self.xy_window = xy_window
         self.xy_overlap = xy_overlap
         self.heatmap_threshold = heatmap_threshold
+        self.heatmap_buffer_size = heatmap_buffer_size
         self.classifier = classifier
 
-        self.stable_heatmaps = heatmap.StableHeatMaps(threshold=heatmap_threshold, num_frames=25)
+        self.stable_heatmaps = heatmap.StableHeatMaps(threshold=heatmap_threshold, 
+                                                      num_frames=heatmap_buffer_size)
 
     def detect(self, input_image, frame_overlay=True):
 

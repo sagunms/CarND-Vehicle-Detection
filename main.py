@@ -40,7 +40,7 @@ if __name__ == "__main__":
     print('Model loaded: {}.'.format(args.model))
 
     # Load video
-    video = VideoFileClip(args.inputfile).subclip(37.5, 37.8)
+    video = VideoFileClip(args.inputfile)#.subclip(37.5, 37.8)
 
     # --- VEHICLE DETECTION ---
     
@@ -59,6 +59,7 @@ if __name__ == "__main__":
                                                     xy_window = params['xy_window'],
                                                     xy_overlap = params['xy_overlap'],
                                                     heatmap_threshold = params['heat_threshold'],
+                                                    heatmap_buffer_size = config['heat_buffer_size'], # TODO: Save this into the model.mdl
                                                     classifier=pipeline)
 
     print('Vehicle Detector loaded with following params:')
@@ -87,14 +88,14 @@ if __name__ == "__main__":
     
     def pipeline(img):
 
+        # Find vehicles, enable video overlay
+        img_vehicle = vehicle_detector.detect(img, frame_overlay=False)
+
         # Correct for camera distortion
         img = calibrate.undistort(img)
 
-        # Find vehicles, enable video overlay
-        img_vehicle = vehicle_detector.detect(img, frame_overlay=True)
-
         # Find lane lines, disable video overlay
-        img_lane = lane_detector.detect(img, frame_overlay=False)
+        img_lane = lane_detector.detect(img, frame_overlay=True)
 
         # Combine annotated outputs from both vehicle and lane line detectors
         img_combined = cv2.addWeighted(img_vehicle, 1.0, img_lane, 1.0, 0)

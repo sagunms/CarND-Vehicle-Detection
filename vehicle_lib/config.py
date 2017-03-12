@@ -14,6 +14,7 @@ config = {
     'xy_window'         : (96, 85),
     'xy_overlap'        : (0.75, 0.75),
     'heat_threshold'    : 15,
+    'heat_buffer_size'  : 20,
     'colour_filter_y'   : (90, 255),        # Lane finding
     'colour_filter_v'   : (10, 110),
     'sobel_grad_xy'     : 'x',
