@@ -1,6 +1,8 @@
 # Vehicle Detection Project
+[![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
-### Overview
+Overview
+---
 
 This project detects and tracks vehicles using traditional computer vision and machine learning techniques. These include performing a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of vehicle/non-vehicle images and training a Linear Support Vector Machines (SVM) classifier model. The algorithm extracts features from the input video stream by applying a colour transform, performing HOG, Colour Histogram and Spatial binning. Then a sliding-window technique is used to scan the road for vehicles in the images by using the trained classifier to indicate that certain patches correspond to a vehicle or not. False positive are filtered out and vehicle tracking is stabalised by thresholding on heat maps over a number of frames of overlapping bounding boxes. 
 
@@ -12,16 +14,18 @@ This project detects and tracks vehicles using traditional computer vision and m
 [non_vehicle_images]: ./output_images/non_vehicle_images.png
 [output_bboxes]: ./output_images/output_bboxes.png
 [overview_gif]: ./output_images/overview.gif
+[overview_combined_gif]: ./output_images/overview_combined.gif
 [sliding_window_roi]: ./output_images/sliding_window_roi.png
 [vehicle_images]: ./output_images/vehicle_images.png
 [test_video]: ./annotated_project_video_test.mp4
 [final_video]: ./annotated_project_video.mp4
 
-The following animation demonstrate how the final model performs on the given video stream.
+The following animation demonstrate how the final model, combined with [Lane Detection](https://github.com/sagunms/CarND-Advanced-Lane-Lines), performs on the given video stream.
 
-![alt text][overview_gif]
+![alt text][overview_combined_gif]
 
-### Project goals
+Project goals
+---
 
 * Perform a Histogram of Oriented Gradients (HOG) feature extraction on a labeled training set of images and train a classifier Linear SVM classifier
 * Optionally, you can also apply a color transform and append binned color features, as well as histograms of color, to your HOG feature vector. 
@@ -30,9 +34,8 @@ The following animation demonstrate how the final model performs on the given vi
 * Run your pipeline on a video stream (start with the test_video.mp4 and later implement on full project_video.mp4) and create a heat map of recurring detections frame by frame to reject outliers and follow detected vehicles.
 * Estimate a bounding box for vehicles detected.
 
+Run Instructions
 ---
-
-## Run Instructions 
 
 The project is written in python and utilises numpy, OpenCV, scikit learn and MoviePy.
 
@@ -76,32 +79,36 @@ python model.py -m model.mdl
 python main.py -m model.mdl -i project_video.mp4 -o annotated_project_video.mp4
 ```
 
+
+Project structure
 ---
 
-## Project structure
-
 ### Source Code
-The code is divided up into several files which are imported by model.py and main.py.
-* main.py - Takes input video file, input trained model and outputs annotated video without bounding boxes highlighting the detected vehicles.
-* model.py - Reads vehicle and non-vehicle labelled images, extracts HOG features for both classes, splits features into training and validation datasets. Then, trains a pipeline consisting of StandardScaler and a Linear SVM classifier and saves the trained model as output.
-* vehicle_lib/config.py - Consists of configuration parameters such as colour space, HOG parameters, spatial size, histogram bins, sliding window parameters, and region of interest, etc.
-* vehicle_lib/vehicle_detect.py - Main class of the project which encapsulates sliding windows, feature generation, svm, remove duplicates and false positives, etc.
-* vehicle_lib/feature_extract.py - Consists of functions related to feature extraction such as HOG features, spatial binning, colour histogram, etc.
-* vehicle_lib/window.py - Consists of functions related to sliding window traversal and predicting which patch of the video frame contains a vehicle using the trained SVM model. 
-* vehicle_lib/heatmap.py - Class for stablising detected heatmaps. Maintains history of heat maps over multiple frames and takes aggregate of all frames. 
-* vehicle_lib/utils.py - Consists of utility functions to display images, features, traverse through subdirectories to load training images.
-* vehicle_lib/debug.py - Some plotting functions the helped during debugging. 
+The code is divided up into several files which are imported by `model.py` and `main.py`.
+* `main.py` - Takes input video file, input trained model and outputs annotated video with bounding boxes highlighting the detected vehicles. Moreover, it also highlights the lane the vehicle is in due to the integration of lane detection library.
+* `model.py` - Reads vehicle and non-vehicle labelled images, extracts HOG features for both classes, splits features into training and validation datasets. Then, trains a pipeline consisting of StandardScaler and a Linear SVM classifier and saves the trained model as output.
+* `vehicle_lib/config.py` - Consists of configuration parameters such as colour space, HOG parameters, spatial size, histogram bins, sliding window parameters, and region of interest, etc.
+* `vehicle_lib/vehicle_detect.py` - Main class of the project which encapsulates sliding windows, feature generation, svm, remove duplicates and false positives, etc.
+* `vehicle_lib/feature_extract.py` - Consists of functions related to feature extraction such as HOG features, spatial binning, colour histogram, etc.
+* `vehicle_lib/window.py` - Consists of functions related to sliding window traversal and predicting which patch of the video frame contains a vehicle using the trained SVM model. 
+* `vehicle_lib/heatmap.py` - Class for stablising detected heatmaps. Maintains history of heat maps over multiple frames and takes aggregate of all frames. 
+* `vehicle_lib/utils.py` - Consists of utility functions to display images, features, traverse through subdirectories to load training images.
+* `vehicle_lib/debug.py` - Some plotting functions the helped during debugging.
+* `lane_lib/*` - Lane Detection library from my [Advanced Lane Finding](https://github.com/sagunms/CarND-Advanced-Lane-Lines) project.
 
 
 ### Miscellaneous Files
- * VehicleDetection.ipynb - Jupyter notebook for generating various stages of the project to assist this writeup. Images produced from this notebook can also be found at output_images/*.png
- * model.mdl - Trained model saved as the outcome of training the Linear SVM classifier from model.py. This file was then used in main.py to produce the annotated videos for demonstrating the working of my vehicle detection project. 
- * annotated_project_video.mp4 - The output of the vehicle detection project when processing against project_video.mp4 video stream.
- * annotated_project_video_test.mp4 - The output of the vehicle detection project when processing against test_video.mp4 video stream. 
+ * `VehicleDetection.ipynb` - Jupyter notebook for generating various stages of the project to assist this writeup. Images produced from this notebook can also be found at `output_images/*.png`.
+ * `model.mdl` - Trained model saved as the outcome of training the Linear SVM classifier from model.py. This file was then used in main.py to produce the annotated videos for demonstrating the working of my vehicle detection project. 
+ * `calib.p` - Pickle file containing instrinc camera calibration matrix and distortion coefficient saved as the outcome of `CameraCalibrate` class used during the initialisation of the lane detection pipeline.
+ * `annotated_project_video.mp4` - The output of the vehicle detection project when processing against project_video.mp4 video stream.
+ * `annotated_project_video_test.mp4` - The output of the vehicle detection project when processing against test_video.mp4 video stream. 
+ * `annotated_project_video_combined.mp4` - The output of the vehicle detection project when combined with lane finding project, and processing against `project_video.mp4` video stream. 
 
+Algorithm
 ---
 
-## Histogram of Oriented Gradients (HOG) and other features
+### Histogram of Oriented Gradients (HOG) and other features
 
 First step is to extract the features used to train the classifier and then to classify the video frames.
 
@@ -117,11 +124,9 @@ After trying out different color spaces and different parameters `skimage.hog()`
 
 First I tried different parameters however, the one provided in the course material was better and therefore settled with that. I used `YCrCb` color space and HOG parameters of `orientations=9`, `pix_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
-![alt text][hog_features_vehicles]
+![alt text][hog_features_vehicles] ![alt text][hog_features_non_vehicles]
 
-![alt text][hog_features_non_vehicles]
-
-## Classifier
+### Classifier
 
 After extracting features, we need to train a classifier to be able to differentiate between a portion of the frame as being a vehicle or non-vehicle. 
 
@@ -140,7 +145,7 @@ Pipeline(steps=[('scaling', StandardScaler(copy=True, with_mean=0, with_std=1)),
   tol=0.001, verbose=False))])
 ```
 
-## Sliding Window Search
+### Sliding Window Search
 
 To locate the cars in each frame, a sliding window approach was used over a region of interest. Initially, I started with different window sizes and overlaps hoping to get a finer resolution and higher detection accuracy. I tried different window sizes, region of interest and overlaps. Through hit and trail, I settled for a more simplistic single scale window instead of varying the sizes. The parameters I used are as follows which can be found in `vehicle_lib/config.py`.
 
@@ -168,7 +173,7 @@ For this project, I searched on YCrCb 3-channel HOG features plus spatially binn
     * `color_space = YCrCb`
     * Function: `get_hog_features()` in `vehicle_lib/feature_extract.py`.
     
-## Filtering False positives and Vehicle Tracking
+### Filtering False positives and Vehicle Tracking
 
 I recorded the positions of positive detections in each frame of the video. Numerous patches in the images are predicted as being a vehicle and therefore contains noisy false positives. 
 
@@ -188,19 +193,22 @@ This worked great for images but when testing with video frames, the bounding bo
 
 The method `generate()` generates an aggregate sum of heatmap over history of 20 frames which thereby helps to stabalise the predicted bounding boxes. I am able to eliminate all false positives as shown in the project video, showing the method works fine.
 
-## Video Implementation
+Video Implementation
+---
 
 The working implementation can be summarised with the following animation.
 
 ![alt text][overview_gif]
 
-My pipeline should perform reasonably well on the entire project video. 
+My pipeline was able to perform reasonably well on the entire [project video](./project_video.mp4). The working implementation after combining my previous [Advanced Lane Detection](https://github.com/sagunms/CarND-Advanced-Lane-Lines) project can be summarised with the following animation.
 
-Here's a link to [test video result](./annotated_project_video_test.mp4) and [final project video result](./annotated_project_video.mp4).
+![alt text][overview_combined_gif]
 
+Here's a link to [test video result](./annotated_project_video_test.mp4), [final project video result](./annotated_project_video.mp4), and [result of combined vehicle and lane detection](./annotated_project_video_combined.mp4).
+
+
+Discussion, Limitations and Improvements
 ---
-
-## Discussion, Limitations and Improvements
 
 This project was really exciting to work on but it's a shame I had very little time to work on it. The implementation is far from perfect, but vehicle detection works quite well for the given project video. However, several things could be improved.
 
